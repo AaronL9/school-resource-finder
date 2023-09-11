@@ -1,0 +1,61 @@
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  background-color: #efefef;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sidenav h3 {
+  width: 250px;
+  text-align: center;
+}
+
+.sidenav a {
+  text-decoration: none;
+  font-size: 1.15rem;
+  color: #4C5656;
+  display: block;
+  text-align: center;
+  outline: none;
+  padding-block: 1rem;
+  transition: all 0.5s;
+  border-radius: 50px;
+  width: 200px;
+  position: relative;
+}
+
+.sidenav .notes_reviewers:hover {
+  background-color: #61b8ff;
+}
+
+.sidenav .my_reviewer:hover {
+  background-color: #61ffa3;
+}
+
+.sidenav .my_request:hover {
+  background-color: #ffd861;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  font-size: 36px;
+  margin-left: 50px;
+  background-color: none;
+  border: none;
+}
+
+.open {
+  width: 250px;
+}

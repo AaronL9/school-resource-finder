@@ -1,0 +1,87 @@
+.registration {
+  width: min(500px, 90vw);
+  height: 625px;
+  background-color: white;
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.registration .caption {
+  text-align: center;
+}
+
+.registration form {
+  margin-top: 2rem;
+}
+
+.registration form div {
+  width: max-content;
+  margin: auto;
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+.registration form label {
+  display: block;
+}
+
+.registration form input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border-width: 1px;
+}
+
+.registration form input[type="submit"] {
+  display: block ;
+  cursor: pointer;
+  background-color: var(--bg-primary);
+  outline: none;
+  border: none;
+  color: black;
+  padding: 1rem;
+  font-size: 1rem;
+  margin-top: 2rem;
+  width: 300px;
+  margin-inline: auto;
+}
+
+.registration .media-options {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.registration .media-options a {
+  width: 150px;
+  text-decoration: none;
+  color: black;
+  border: 2px solid #cccccc;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.registration .media-options img {
+  width: 25px;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.registration .go-to-login {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.registration .go-to-login a {
+  color: var(--text-color);
+}

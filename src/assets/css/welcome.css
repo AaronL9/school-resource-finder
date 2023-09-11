@@ -1,0 +1,42 @@
+.welcome {  
+  /* position: absolute; */
+  inset: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  gap: 2rem;
+  background: transparent;
+}
+
+.welcome figure, .welcome .controlls {
+  text-align: center;
+}
+
+.welcome figure img {
+  width: min(400px, 80vw);
+}
+
+.welcome figcaption {
+  font-size: clamp(2rem, 2vw + 1rem, 2.5rem);
+  font-weight: 700;
+  line-height: 2.5rem;
+  margin-block: 1rem 2rem;
+}
+
+.welcome .controlls > a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  background-color: var(--bg-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  transition: linear 100ms;
+}
+
+.welcome .controlls p > a {
+  color: var(--bg-primary);
+}

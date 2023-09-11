@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+:root {
+  --bg-primary: rgb(250 204 21);
+  --text-color: rgb(234 179 8);;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%; */
+}
+
+main {
+  margin-block: 3rem;
+}
+
+.react-multi-carousel-list {
+  padding: 1rem 0rem;
+}
+
+.react-multiple-carousel__arrow--right {
+  right: calc(1% + 1px);
+}
+
+.react-multiple-carousel__arrow--left {
+  left: calc(1% + 1px);
+}
+
+
