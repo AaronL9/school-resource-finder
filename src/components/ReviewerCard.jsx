@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/css/reviewer_card.css";
+import "../assets/css/home/reviewer_card.css";
 
 export default function ReviewerCard() {
   return (

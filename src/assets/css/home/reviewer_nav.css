@@ -1,0 +1,31 @@
+.reviewers {
+  /* border: 2px solid red; */
+  height: 500px;
+}
+
+.reviewers__nav {
+  width: 70%;
+  height: 50px;
+  margin-inline: auto;
+  background-color: #f5f5f5;
+  border-radius: 50px;
+}
+
+.reviewers__list {
+  /* border: 1px solid blue; */
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  height: inherit;
+}
+
+.reviewers__link {
+  color: black;
+  text-decoration: none;
+}
+
+.reviewers__link:hover {
+  color: #877dfa;
+}

@@ -18,11 +18,11 @@ export default function Login() {
           <InputField label={'Password'} type={"password"} />
           <input type="submit" value={"Login"} />
         </form>
-        <div className="line"></div>
+        {/* <div className="line"></div>
         <div className="media-options">
           <MediaOption source={"/svg/fb.svg"} name={"Facebook"} />
           <MediaOption source={"/svg/google.svg"} name={"Google"} />
-        </div>
+        </div> */}
         <div className="go-to-login">
           <p>
             Don't have an account ? <Link to={"/register"}>Register</Link>

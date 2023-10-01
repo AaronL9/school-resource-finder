@@ -17,11 +17,11 @@ export default function Registration() {
           <InputField type={"password"} label={"Password"} />
           <input type="submit" value={"Sign Up"} />
         </form>
-        <div className="line"></div>
+        {/* <div className="line"></div>
         <div className="media-options">
           <MediaOption source={"/svg/fb.svg"} name={"Facebook"} />
           <MediaOption source={"/svg/google.svg"} name={"Google"} />
-        </div>
+        </div> */}
         <div className="go-to-login">
           <p>
             Already have an account? <Link to={"/login"}>Login</Link>
