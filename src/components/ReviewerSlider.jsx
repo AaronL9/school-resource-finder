@@ -34,7 +34,7 @@ export default function ReviewerSlider() {
     },
   };
   return (
-    <Carousel infinite responsive={responsive}>
+    <Carousel sliderClass="slider" infinite responsive={responsive}>
       <ReviewerCard />
       <ReviewerCard />
       <ReviewerCard />

@@ -1,23 +1,84 @@
+import React, { useEffect, useState } from "react";
 import "../assets/css/navbar.css";
+import SideBarLink from "./SideBarLink";
+import { Link, useLocation } from "react-router-dom";
 
-export default function NavBar({ setIsOpen }) {
-  const handleClick = () => {
-    setIsOpen('open')
-  }
+function Navbar() {
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    setIsOpen(false);
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
-    <nav>
-      <div className="left-corner">
-        <button onClick={handleClick}>
-          <img id="hamburger" src="/svg/hamburger.svg" />
-        </button>
-        <h2>School Resource Finder</h2>
-      </div>
-      <div className="right-corner">
-        <img id="question" src="/svg/question.svg" />
-        <img id="heart" src="/svg/heart.svg" />
-        <img id="notification-bell" src="/svg/notification-bell.svg" />
-        <img id="profile-picture" src="/images/profile.jpg" />
-      </div>
-    </nav>
+    <>
+      <nav className={`nav ${isOpen ? "open" : ""}`}>
+        <div className="logo">
+          <i className="bx bx-menu menu-icon" onClick={toggleNavbar}></i>
+          <span className="logo-name">School Resource Finder</span>
+        </div>
+        <div className="sidebar">
+          <div className="logo">
+            <i className="bx bx-menu menu-icon" onClick={toggleNavbar}></i>
+            <span className="logo-name">MENU</span>
+          </div>
+          <div className="sidebar-content">
+            <ul className="lists">
+              <SideBarLink
+                iconClass={"bx bx-home-alt icon"}
+                label={"Home"}
+                path={"home"}
+              />
+              <SideBarLink
+                iconClass={"bx bx-file icon"}
+                label={"Submit Reviewer"}
+                path={"submit"}
+              />
+              <SideBarLink
+                iconClass={"bx bx-heart icon"}
+                label={"Favorites"}
+                path={"favorites"}
+              />
+              <SideBarLink
+                iconClass={"bx bx-message-rounded icon"}
+                label={"Message Us"}
+                path={"message"}
+              />
+              <SideBarLink
+                iconClass={"bx bx-info-circle icon"}
+                label={"FAQs"}
+                path={"faqs"}
+              />
+            </ul>
+            <div className="bottom-content">
+              <li className="list">
+                <Link to="/settings" id="nav-link">
+                  <i className="bx bx-cog icon"></i>
+                  <span className="link">Settings</span>
+                </Link>
+              </li>
+              <li className="list">
+                <Link to="/" id="nav-link">
+                  <i className="bx bx-log-out icon"></i>
+                  <span className="link">Logout</span>
+                </Link>
+              </li>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <section
+        className={`overlay ${isOpen ? "open" : ""}`}
+        onClick={toggleNavbar}
+      ></section>
+    </>
   );
 }
+
+export default Navbar;

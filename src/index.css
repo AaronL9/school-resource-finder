@@ -2,19 +2,19 @@
 
 :root {
   --bg-primary: rgb(250 204 21);
-  --text-color: rgb(234 179 8);;
+  --text-color: rgb(234 179 8);
 }
 
-*,
-*::after,
-*::before {
+* {
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
   font-family: "Poppins", sans-serif;
+
   /* display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,19 +23,22 @@ body {
 }
 
 main {
-  margin-block: 3rem;
+  margin-block: 6rem 2rem;
 }
 
+.slider {
+  z-index: -1000;
+}
 .react-multi-carousel-list {
   padding: 1rem 0rem;
 }
 
 .react-multiple-carousel__arrow--right {
   right: calc(1% + 1px);
+  z-index: 0;
 }
 
 .react-multiple-carousel__arrow--left {
   left: calc(1% + 1px);
+  z-index: 0;
 }
-
-

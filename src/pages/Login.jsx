@@ -13,7 +13,7 @@ export default function Login() {
           <h2>Hi Welcome Back!👋</h2>
           <p>Hello again you have been missed!</p>
         </div>
-        <form onSubmit={() => navigate('/user/home')}>
+        <form onSubmit={() => navigate('/student/home')}>
           <InputField label={"Email Address"} type={"email"} />
           <InputField label={'Password'} type={"password"} />
           <input type="submit" value={"Login"} />

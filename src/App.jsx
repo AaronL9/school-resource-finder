@@ -7,20 +7,26 @@ import {
 } from "react-router-dom";
 
 // pages
-import Welcome from "./pages/Welcome";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import RootLayout from "./layout/RootLayout";
+import SubmitReviewer from './pages/SubmitReviewer'
+import Favorites from './pages/Favorites'
+import MessageUs from './pages/MessageUs'
+import Faqs from './pages/Faqs'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Welcome />}></Route>
+      <Route path="/" element={<Login />} />
       <Route path="register" element={<Registration />} />
-      <Route path="login" element={<Login />} />
       <Route path="student" element={<RootLayout />}>
         <Route path="home" element={<Home />} />
+        <Route path="submit" element={<SubmitReviewer />} />
+        <Route path="favorites" element={<Favorites />} />
+        <Route path="message" element={<MessageUs />} />
+        <Route path="faqs" element={<Faqs />} />
       </Route>
     </>
   )

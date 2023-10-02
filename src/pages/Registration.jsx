@@ -24,7 +24,7 @@ export default function Registration() {
         </div> */}
         <div className="go-to-login">
           <p>
-            Already have an account? <Link to={"/login"}>Login</Link>
+            Already have an account? <Link to={"/"}>Login</Link>
           </p>
         </div>
       </div>

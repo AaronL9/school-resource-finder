@@ -9,8 +9,7 @@ export default function RootLayout() {
   return (
     <>
       <header>
-        <NavBar setIsOpen={setIsOpen} />
-        <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
+        <NavBar />
       </header>
       <main>
         <Outlet />
