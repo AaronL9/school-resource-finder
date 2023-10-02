@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "../assets/css/faqs.css";
 import { faqsData } from "../assets/js/data";
-import Question from "../components/faqs/Question";
 export default function Faqs() {
-  return (
-    <div className="faqs">
-      <h1 className="faqs__title">FAQs</h1>
-      {/* Accessibility pattern:*/}
-      {/* place the role of "group" on the details wrapper*/}
-      {/* place the role of "button" on the summary, which lets the user know they can interact with the element*/}
+  const [expanded, setExpanded] = useState(null);
 
-      {faqsData.map((data) => (
-        <Question content={data} />
-      ))}
+  const handleAccordionClick = (id) => {
+    setExpanded((prevState) => (prevState === id ? null : id));
+  };
+  return (
+    <div className="accordion-container">
+      <h2>Frequently Asked Questions</h2>
+      <div className="accordion">
+        {faqsData.map((item) => (
+          <div className="accordion-item" key={item.id}>
+            <button
+              id={`accordion-button-${item.id}`}
+              aria-expanded={expanded === item.id ? 'true' : 'false'}
+              onClick={() => handleAccordionClick(item.id)}
+            >
+              <span className="accordion-title">{item.question}</span>
+              <span className="icon" aria-hidden="true"></span>
+            </button>
+            {expanded === item.id && (
+              <div className="accordion-content">
+                <p>{item.answer}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

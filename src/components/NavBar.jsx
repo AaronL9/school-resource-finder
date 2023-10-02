@@ -58,7 +58,7 @@ function Navbar() {
             </ul>
             <div className="bottom-content">
               <li className="list">
-                <Link to="/settings" id="nav-link">
+                <Link to="/student/settings" id="nav-link">
                   <i className="bx bx-cog icon"></i>
                   <span className="link">Settings</span>
                 </Link>

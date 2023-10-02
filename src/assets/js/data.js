@@ -35,32 +35,38 @@ export const loginData = [
 
 export const faqsData = [
   {
+    id: 1,
     question: "What is the School Reviewer Finder platform?",
     answer:
       "The School Reviewer Finder platform is an online tool designed to help students easily discover and access educational reviewers available within our school. It aims to simplify the process of finding educational materials to support your studies.",
   },
   {
+    id: 2,
     question: "Can I submit my own educational reviewers to the platform?",
     answer:
       'Absolutely! We encourage students to contribute. Use the "Submit Reviewer" feature to share your educational reviewers with others. Your contributions will help fellow students.',
   },
   {
+    id: 3,
     question:
       "How can I contact the administrators of the School Reviewer Finder platform?",
     answer:
       'If you have questions or need assistance, visit the "Contact Us" section. You can find our contact details or use the provided contact form to reach out to us. We\'re here to help!',
   },
   {
+    id: 4,
     question: "Are there any fees associated with using the platform?",
     answer:
       "No, the School Reviewer Finder platform is completely free to use. We believe in providing a valuable resource to all students without any charges.",
   },
   {
+    id: 5,
     question: "Is my personal information secure on the platform?",
     answer:
       "We take data security seriously. Your personal information is kept confidential, and we follow strict privacy practices. You can review our Privacy Policy for more details.",
   },
   {
+    id: 6,
     question:
       "What should I do if I encounter technical issues while using the platform?",
     answer:
