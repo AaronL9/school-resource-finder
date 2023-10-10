@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/home/home.css";
 import "../assets/css/home/reviewer_nav.css";
 import ReviewerSlider from "../components/ReviewerSlider";
@@ -12,6 +12,21 @@ import BigCard from "../components/home/BigCard";
 // import RequestIcon from "../assets/svg/RequestIcon";
 
 export default function Home() {
+  const [reviewers, setReviewers] = useState([]);
+
+  useEffect(() => {
+    const fetchReviewers = async () => {
+      const response = await fetch("http://localhost:5000/api/reviewers/");
+
+      const json = await response.json();
+
+      if (response.ok) {
+        setReviewers(json);
+      }
+    };
+    fetchReviewers();
+  }, []);
+
   return (
     <div className="home">
       <section className="reviewer-slider">
@@ -33,16 +48,9 @@ export default function Home() {
           </ul>
         </div>
         <div className="reviewers__card-list">
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
-          <BigCard />
+          {reviewers?.map((reviewer) => (
+            <BigCard description={reviewer.description} />
+          ))}
         </div>
       </section>
     </div>
