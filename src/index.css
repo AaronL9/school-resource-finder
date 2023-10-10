@@ -14,7 +14,6 @@
 
 body {
   font-family: "Poppins", sans-serif;
-
   /* display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,4 +40,12 @@ main {
 .react-multiple-carousel__arrow--left {
   left: calc(1% + 1px);
   z-index: 0;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.42);
+  height: 100%;
 }

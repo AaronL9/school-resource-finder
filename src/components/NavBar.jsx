@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+// assets
 import "../assets/css/navbar.css";
+
+// components
 import SideBarLink from "./SideBarLink";
-import { Link, useLocation } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function Navbar() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuthContext();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
+  };
+
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -64,7 +82,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="list">
-                <Link to="/" id="nav-link">
+                <Link onClick={handleLogout} id="nav-link">
                   <i className="bx bx-log-out icon"></i>
                   <span className="link">Logout</span>
                 </Link>
