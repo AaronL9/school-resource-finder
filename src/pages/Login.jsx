@@ -12,15 +12,15 @@ export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, signInWithGoogle } = useAuthContext();
+  const { signIn } = useAuthContext();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      await signIn(email, password);
+      signIn(email, password);
       setIsLoading(false)
-      navigate("/student/home");
+      console.log("here")
     } catch (error) {
       console.log(error.message);
     }

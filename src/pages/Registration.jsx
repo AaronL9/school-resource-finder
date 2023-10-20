@@ -1,8 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
 // assets
 import "../assets/css/registration.css";
 
@@ -19,15 +16,14 @@ export default function Registration() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { createUser, signInWithGoogle } = useAuthContext();
+  const { createUser } = useAuthContext();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      await createUser(email, password);
+      createUser(email, password);
       setIsLoading(false);
-      navigate("/student/home");
     } catch (error) {
       console.log(error.message);
     }

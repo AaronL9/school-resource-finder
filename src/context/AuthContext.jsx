@@ -1,12 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { auth, googleProvider } from "../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  signInWithPopup,
-} from "firebase/auth";
+import supabase from "../config/supabaseClient";
 
 export const AuthContext = createContext();
 
@@ -14,38 +7,44 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const createUser = async (email, password) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    if (data) {
+      console.log(data);
+    }
   };
 
-  const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const signIn = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
+    }
   };
 
-  const logout = () => {
-    return signOut(auth);
-  };
+  const logout = () => {};
 
-  const signInWithGoogle = () => {
-    return signInWithPopup(auth, googleProvider);
-  };
+  const signInWithGoogle = () => {};
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-      setIsLoading(false);
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event, session);
     });
-    return () => {
-      unsubscribe();
-    };
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ isLoading, createUser, user, logout, signIn, signInWithGoogle }}
-    >
-      {!isLoading && children}
+    <AuthContext.Provider value={{ isLoading, createUser, signIn }}>
+      {children}
     </AuthContext.Provider>
   );
 };
