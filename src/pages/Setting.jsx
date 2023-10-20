@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { auth, db, storage } from "../config/firebase"; // Import 'storage' from Firebase config
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Import 'doc' and 'setDoc' from Firebase Firestore
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage"; // Import 'getStorage', 'ref', 'uploadBytes', and 'getDownloadURL' for Firebase Storage
 import "../assets/css/setting.css";
 
 const Setting = () => {
@@ -11,29 +17,29 @@ const Setting = () => {
 
   // Function to save profile data to local storage
   const saveProfileToLocalStorage = (profileData) => {
-    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    localStorage.setItem("userProfile", JSON.stringify(profileData));
   };
 
   useEffect(() => {
     // Check local storage for profile data
-    const storedProfileData = localStorage.getItem('userProfile');
+    const storedProfileData = localStorage.getItem("userProfile");
     if (storedProfileData) {
       const parsedProfileData = JSON.parse(storedProfileData);
-      setDisplayName(parsedProfileData.displayName || '');
-      setStudentNumber(parsedProfileData.studentNumber || '');
-      setProfilePhoto(parsedProfileData.photoURL || '');
+      setDisplayName(parsedProfileData.displayName || "");
+      setStudentNumber(parsedProfileData.studentNumber || "");
+      setProfilePhoto(parsedProfileData.photoURL || "");
     } else {
       const fetchUser = async () => {
         const user = auth.currentUser;
         if (user) {
-          const userDocRef = doc(db, "users", "kvaZPBdAi4VyOvjx471gpmcYyfJ2");
+          const userDocRef = doc(db, "users", user.uid);
           const userDocSnap = await getDoc(userDocRef);
 
           if (userDocSnap.exists()) {
             const profileData = userDocSnap.data();
-            setDisplayName(profileData.displayName || '');
-            setStudentNumber(profileData.studentNumber || '');
-            setProfilePhoto(profileData.photoURL || '');
+            setDisplayName(profileData.displayName || "");
+            setStudentNumber(profileData.studentNumber || "");
+            setProfilePhoto(profileData.photoURL || "");
 
             // Save the profile to local storage
             saveProfileToLocalStorage(profileData);
@@ -50,13 +56,13 @@ const Setting = () => {
     try {
       const user = auth.currentUser;
       if (user) {
-        const userDocRef = doc(db, "users", user.uid); // Use 'doc' and 'db'
+        const userDocRef = doc(db, "users", user.uid);
         const updatedProfileInfo = {
           displayName: displayName || null,
           studentNumber: studentNumber || null,
           photoURL: profilePhoto || null,
         };
-        await setDoc(userDocRef, updatedProfileInfo, { merge: true }); // Use 'setDoc'
+        await setDoc(userDocRef, updatedProfileInfo, { merge: true });
         console.log("Profile updated successfully!");
         setIsEditing(false);
 
@@ -81,10 +87,10 @@ const Setting = () => {
     }
 
     try {
-      const storageRef = storage.ref();
-      const fileRef = storageRef.child(`${auth.currentUser.uid}/profilePhoto`);
-      await fileRef.put(file);
-      const downloadURL = await fileRef.getDownloadURL();
+      const storageRef = getStorage();
+      const fileRef = ref(storageRef, `${auth.currentUser.uid}/profilePhoto`);
+      await uploadBytes(fileRef, file);
+      const downloadURL = await getDownloadURL(fileRef);
       setProfilePhoto(downloadURL);
     } catch (error) {
       console.error("Error uploading profile photo:", error);
