@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      return error
+      return error;
     }
     setUser(null);
   };
@@ -43,14 +43,19 @@ export const AuthContextProvider = ({ children }) => {
   const signInWithGoogle = () => {};
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    const unsubscribe = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user);
+      setIsLoading(false);
     });
-    setIsLoading(false);
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoading, createUser, signIn, logout, user }}>
+    <AuthContext.Provider
+      value={{ isLoading, createUser, signIn, logout, user }}
+    >
       {!isLoading && children}
     </AuthContext.Provider>
   );
