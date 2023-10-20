@@ -19,10 +19,10 @@ function Navbar() {
   };
 
 
-  const handleLogout = async (e) => {
+  const handleLogout = (e) => {
     e.preventDefault();
     try {
-      await logout();
+      logout();
       navigate("/");
     } catch (error) {
       console.log(error);

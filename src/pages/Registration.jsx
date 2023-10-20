@@ -24,6 +24,7 @@ export default function Registration() {
     try {
       createUser(email, password);
       setIsLoading(false);
+      navigate('/student/home')
     } catch (error) {
       console.log(error.message);
     }

@@ -19,8 +19,8 @@ export default function Login() {
     e.preventDefault();
     try {
       signIn(email, password);
-      setIsLoading(false)
-      console.log("here")
+      setIsLoading(false);
+      navigate("/student/home");
     } catch (error) {
       console.log(error.message);
     }

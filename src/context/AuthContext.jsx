@@ -4,7 +4,7 @@ import supabase from "../config/supabaseClient";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const createUser = async (email, password) => {
@@ -32,19 +32,24 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {};
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    console.log(error)
+  };
 
   const signInWithGoogle = () => {};
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
+      console.log(session.user);
+      setUser(session.user);
     });
+    setIsLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoading, createUser, signIn }}>
-      {children}
+    <AuthContext.Provider value={{ isLoading, createUser, signIn, logout }}>
+      {!isLoading && children}
     </AuthContext.Provider>
   );
 };
