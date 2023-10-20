@@ -1,116 +1,117 @@
-import React from 'react'
-import '../assets/css/setting.css'
-export default function Setting() {
+import React, { useState, useEffect } from 'react';
+import { auth, firestore, storage } from '../config/firebase'; 
+import '../assets/css/setting.css';
+
+const Setting = () => {
+  const [displayName, setDisplayName] = useState('');
+  const [studentNumber, setStudentNumber] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      const userDocRef = firestore.collection('users').doc(user.uid);
+      userDocRef.get().then((doc) => {
+        if (doc.exists) {
+          const profileData = doc.data();
+          setDisplayName(profileData.displayName || '');
+          setStudentNumber(profileData.studentNumber || '');
+          setProfilePhoto(profileData.photoURL || '');
+        }
+      });
+    }
+  }, []);
+
+  const handleUpdateProfile = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = firestore.collection('users').doc(user.uid);
+        const updatedProfileInfo = {
+          displayName: displayName || null,
+          studentNumber: studentNumber || null,
+          photoURL: profilePhoto || null,
+        };
+        await userDocRef.set(updatedProfileInfo, { merge: true });
+        console.log('Profile updated successfully!');
+        setIsEditing(false);
+      } else {
+        console.log('User not logged in.');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
+  const handleProfilePhotoChange = async (event) => {
+    const file = event.target.files[0];
+    const maxSizeInBytes = 5 * 1024 * 1024; 
+    if (file.size > maxSizeInBytes) {
+      console.error('File size exceeds the limit (5MB). Please upload a smaller image.');
+      return;
+    }
+
+    try {
+      const storageRef = storage.ref();
+      const fileRef = storageRef.child(`${auth.currentUser.uid}/profilePhoto`);
+      await fileRef.put(file);
+      const downloadURL = await fileRef.getDownloadURL();
+      setProfilePhoto(downloadURL);
+    } catch (error) {
+      console.error('Error uploading profile photo:', error);
+    }
+  };
+
   return (
-    <div className="settings">
-      <div className="settings__wrapper">
-        <div className="settings__left">
-          <ul className="settings__menu">
-            <li className="settings__menu-item">
-              <img
-                className="settings__icon"
-                src="http://res.cloudinary.com/dikpupfzu/image/upload/v1525474712/Profile_2x.png"
-                alt=""
-              />
-              <span className="settings__text">Profile</span>
-            </li>
-            <li className="settings__menu-item">
-              <img
-                className="settings__icon"
-                src="http://res.cloudinary.com/dikpupfzu/image/upload/v1525474855/Notification_2x.png"
-                alt=""
-              />
-              <span className="settings__text">Notifications</span>
-            </li>
-            {/* <li className="settings__menu-item">
-              <img
-                className="settings__icon"
-                src="http://res.cloudinary.com/dikpupfzu/image/upload/v1525474865/Description_2x.png"
-                alt=""
-              />
-              <span className="settings__text">Billing Information</span>
-            </li> */}
-            <li className="settings__menu-item">
-              <img
-                className="settings__icon"
-                src="http://res.cloudinary.com/dikpupfzu/image/upload/v1525474873/Settings_2x.png"
-                alt=""
-              />
-              <span className="settings__text">General</span>
-            </li>
-          </ul>
+    <div className="profile-page">
+      <div className="profile-container">
+        <div className="profile-avatar">
+          <label htmlFor="avatar-upload" className="avatar-label">
+            <img
+              src={profilePhoto || 'https://via.placeholder.com/150'}
+              alt="Profile Avatar"
+              className="avatar-image"
+            />
+            <input
+              type="file"
+              accept="image/*"
+              id="avatar-upload"
+              onChange={handleProfilePhotoChange}
+              disabled={!isEditing}
+            />
+          </label>
         </div>
-        <div className="settings__right">
-          <h2 className="settings__title">Profile Settings</h2>
-          <img
-            className="settings__avatar"
-            src="http://res.cloudinary.com/dikpupfzu/image/upload/v1525474876/profile_avatar.png"
-            alt=""
+        <h2>Profile</h2>
+        <div>
+          <label htmlFor="displayName">Display Name:</label>
+          <input
+            type="text"
+            id="displayName"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            disabled={!isEditing}
           />
-          <h3 className="settings__subtitle">Edit Picture</h3>
-          <div className="settings__form">
-            <form action="index.html" method="post">
-              <div className="settings__field">
-                <label htmlFor="full-name">Full Name</label>
-                <input
-                  className="settings__input"
-                  type="text"
-                  id="full-name"
-                  name="full-name"
-                  defaultValue=""
-                />
-              </div>
-              <div className="settings__field">
-                <label htmlFor="email">Email</label>
-                <input
-                  className="settings__input"
-                  type="text"
-                  id="email"
-                  name="email"
-                />
-              </div>
-              <div className="settings__field">
-                <label htmlFor="password">Password</label>
-                <input
-                  className="settings__input"
-                  type="text"
-                  id="password"
-                  name="password"
-                />
-              </div>
-              <div className="settings__field">
-                <label htmlFor="birthday">Birthday</label>
-                <input
-                  className="settings__input"
-                  type="text"
-                  id="birthday"
-                  name="birthday"
-                />
-              </div>
-            </form>
-          </div>
-          <div className="settings__bottom">
-            <a href="#">
-              <button
-                className="settings__button settings__button--left"
-                type="submit"
-                name="button"
-              >
-                Save Changes
-              </button>
-            </a>
-            <a href="#">
-              <button
-                className="settings__button settings__button--right"
-                type="cancel"
-                name="button"
-              >
-                Cancel
-              </button>
-            </a>
-          </div>
         </div>
+        <div>
+          <label htmlFor="studentNumber">Student Number:</label>
+          <input
+            type="text"
+            id="studentNumber"
+            value={studentNumber}
+            onChange={(e) => setStudentNumber(e.target.value)}
+            disabled={!isEditing}
+          />
+        </div>
+        
+        {isEditing ? (
+          <button onClick={handleUpdateProfile}>Update Profile</button>
+        ) : (
+          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default Setting;
