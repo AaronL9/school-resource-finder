@@ -1,54 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { auth, firestore, storage } from '../config/firebase'; 
-import '../assets/css/setting.css';
+import React, { useState, useEffect } from "react";
+import { auth, db } from "../config/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import "../assets/css/setting.css";
 
 const Setting = () => {
-  const [displayName, setDisplayName] = useState('');
-  const [studentNumber, setStudentNumber] = useState('');
+  const [displayName, setDisplayName] = useState("");
+  const [studentNumber, setStudentNumber] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null);
 
   useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      const userDocRef = firestore.collection('users').doc(user.uid);
-      userDocRef.get().then((doc) => {
-        if (doc.exists) {
-          const profileData = doc.data();
-          setDisplayName(profileData.displayName || '');
-          setStudentNumber(profileData.studentNumber || '');
-          setProfilePhoto(profileData.photoURL || '');
+    const fetchUser = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        // const userDocRef = firestore.collection('users').doc(user.uid);
+        const userDocRef = doc(db, "users", "kvaZPBdAi4VyOvjx471gpmcYyfJ2");
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          console.log("Document data:", userDocSnap.data());
+        } else {
+          console.log("No such document!");
         }
-      });
-    }
+
+        // userDocRef.get().then((doc) => {
+        //   if (doc.exists) {
+        //     const profileData = doc.data();
+        //     setDisplayName(profileData.displayName || '');
+        //     setStudentNumber(profileData.studentNumber || '');
+        //     setProfilePhoto(profileData.photoURL || '');
+        //   }
+        // });
+      }
+    };
+    fetchUser();
   }, []);
 
   const handleUpdateProfile = async () => {
     try {
       const user = auth.currentUser;
       if (user) {
-        const userDocRef = firestore.collection('users').doc(user.uid);
+        const userDocRef = firestore.collection("users").doc(user.uid);
         const updatedProfileInfo = {
           displayName: displayName || null,
           studentNumber: studentNumber || null,
           photoURL: profilePhoto || null,
         };
         await userDocRef.set(updatedProfileInfo, { merge: true });
-        console.log('Profile updated successfully!');
+        console.log("Profile updated successfully!");
         setIsEditing(false);
       } else {
-        console.log('User not logged in.');
+        console.log("User not logged in.");
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error updating profile:", error);
     }
   };
 
   const handleProfilePhotoChange = async (event) => {
     const file = event.target.files[0];
-    const maxSizeInBytes = 5 * 1024 * 1024; 
+    const maxSizeInBytes = 5 * 1024 * 1024;
     if (file.size > maxSizeInBytes) {
-      console.error('File size exceeds the limit (5MB). Please upload a smaller image.');
+      console.error(
+        "File size exceeds the limit (5MB). Please upload a smaller image."
+      );
       return;
     }
 
@@ -59,7 +74,7 @@ const Setting = () => {
       const downloadURL = await fileRef.getDownloadURL();
       setProfilePhoto(downloadURL);
     } catch (error) {
-      console.error('Error uploading profile photo:', error);
+      console.error("Error uploading profile photo:", error);
     }
   };
 
@@ -69,7 +84,7 @@ const Setting = () => {
         <div className="profile-avatar">
           <label htmlFor="avatar-upload" className="avatar-label">
             <img
-              src={profilePhoto || 'https://via.placeholder.com/150'}
+              src={profilePhoto || "https://via.placeholder.com/150"}
               alt="Profile Avatar"
               className="avatar-image"
             />
@@ -103,7 +118,7 @@ const Setting = () => {
             disabled={!isEditing}
           />
         </div>
-        
+
         {isEditing ? (
           <button onClick={handleUpdateProfile}>Update Profile</button>
         ) : (
