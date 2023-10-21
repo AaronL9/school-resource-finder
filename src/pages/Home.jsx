@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from "react";
+import supabase from "../config/supabaseClient";
+
+// assets
 import "../assets/css/home/home.css";
 import "../assets/css/home/reviewer_nav.css";
+
+// components
 import ReviewerSlider from "../components/ReviewerSlider";
 import ReviewersItem from "../components/home/ReviewersItem";
 import BigCard from "../components/home/BigCard";
-// import HomeLink from "../components/HomeLink";
-
-// svg
-// import ReaderIcon from "../assets/svg/ReaderIcon";
-// import NotesIcon from '../assets/svg/NotesIcon';
-// import RequestIcon from "../assets/svg/RequestIcon";
 
 export default function Home() {
   const [reviewers, setReviewers] = useState([]);
 
   useEffect(() => {
     const fetchReviewers = async () => {
-      const response = await fetch("http://localhost:5000/api/reviewers/");
-
-      const json = await response.json();
-
-      if (response.ok) {
-        setReviewers(json);
-      }
+      let { data, error } = await supabase
+        .from("reviewers")
+        .select("reviewer_id, title, subject, description");
+      if (data) setReviewers(data);
+      if (error) console.log(error.message);
     };
     fetchReviewers();
   }, []);
@@ -48,8 +45,8 @@ export default function Home() {
           </ul>
         </div>
         <div className="reviewers__card-list">
-          {reviewers?.map((reviewer) => (
-            <BigCard description={reviewer.description} />
+          {reviewers?.map((reviewer, index) => (
+            <BigCard key={index} details={reviewer} />
           ))}
         </div>
       </section>

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../assets/css/submit_reviewer.css";
 import { TagsInput } from "react-tag-input-component";
 import supabase from "../config/supabaseClient";
 import { useAuthContext } from "../hooks/useAuthContext";
+
+// assets
+import "../assets/css/submit_reviewer.css";
+import SubmitLoader from "../components/SubmitLoader";
 
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
@@ -22,6 +25,7 @@ export default function SubmitReviewer() {
   const { user } = useAuthContext();
   const [tags, setTags] = useState([]);
   const [reviewerFiles, setReviewerFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [reviewerValue, setReviewerValue] = useState({
     student_id: user.id,
     title: "",
@@ -39,6 +43,8 @@ export default function SubmitReviewer() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    document.body.style.overflow = "hidden";
 
     const { data: reviewer_data, error: reviewer_error } = await supabase
       .from("reviewers")
@@ -68,29 +74,29 @@ export default function SubmitReviewer() {
         if (error) console.log(error.message);
       });
 
-      console.log('uploaded')
+      console.log("uploaded");
     }
 
-    if (reviewer_error) console.log(error.message);
+    if (reviewer_error) return console.log(error.message);
+    setTags([])
+    setReviewerFiles([])
+    setReviewerValue({
+      student_id: user.id,
+      title: "",
+      subject: "",
+      description: "",
+    });
+    document.body.style.overflow = "visible";
+    setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   const fetchImage = async () => {
-  //     // Use the JS library to download a file.
-
-  //     const { data, error } = await supabase.storage
-  //       .from("reviewer_pdf")
-  //       .download("images/reviewer_image");
-
-  //     if (error) console.log(error.message)
-  //     if (data) {
-  //       setImage(URL.createObjectURL(data));
-  //     }
-  //   };
-  //   fetchImage();
-  // }, []);
   return (
     <>
+      {isLoading && (
+        <div className="global-loader">
+          <SubmitLoader />
+        </div>
+      )}
       <h1 className="submit__title">Submit Reviewer</h1>
       <div className="formbold-main-wrapper">
         <div className="formbold-form-wrapper">
@@ -105,7 +111,9 @@ export default function SubmitReviewer() {
                 id="title"
                 placeholder="Enter Title"
                 className="formbold-form-input"
+                value={reviewerValue.title}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="formbold-mb-5">
@@ -118,7 +126,9 @@ export default function SubmitReviewer() {
                 id="subject"
                 placeholder="Enter Subject"
                 className="formbold-form-input"
+                value={reviewerValue.subject}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <div className="formbold-mb-5">
@@ -131,10 +141,12 @@ export default function SubmitReviewer() {
                 id="description"
                 placeholder="Enter description"
                 className="formbold-form-input"
+                value={reviewerValue.description}
                 onChange={handleInputChange}
+                required
               />
             </div>
-            <label className="formbold-form-label">Tags</label>
+            <span className="formbold-form-label">Tags</span>
             <TagsInput
               value={tags}
               onChange={setTags}
@@ -150,7 +162,8 @@ export default function SubmitReviewer() {
               allowFileTypeValidation={true}
               maxFiles={2}
               name="file" /* sets the file input name, it's filepond by default */
-              labelIdle='Drag & Drop your pdf and image or <span class="filepond--label-action">Browse</span>'
+              labelIdle='Drag & Drop your pdf and image or <span className="filepond--label-action">Browse</span>'
+              required
             />
             <div>
               <button className="formbold-btn w-full">Upload Reviewer</button>

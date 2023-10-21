@@ -18,6 +18,7 @@ import Faqs from "./pages/Faqs";
 import Setting from "./pages/Setting";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
 import Gate from "./auth/Gate";
+import ReviewerView from "./pages/ReviewerView";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
           <Route path="message" element={<MessageUs />} />
           <Route path="faqs" element={<Faqs />} />
           <Route path="settings" element={<Setting />} />
+          <Route path="reviewers/:id" element={<ReviewerView />} />
         </Route>
       </Route>
     </>

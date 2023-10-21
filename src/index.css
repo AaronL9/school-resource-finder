@@ -42,10 +42,17 @@ main {
   z-index: 0;
 }
 
-.loader {
+.loader, .global-loader {
   position: fixed;
   inset: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.42);
-  height: 100%;
+  z-index: 1000;
+}
+
+.global-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.658);
 }
