@@ -7,14 +7,28 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const createUser = async (email, password) => {
+  const createUser = async (firstName, lastName, email, password) => {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
 
     if (data) {
-      console.log(data);
+      const student_id = data.user.id;
+      const first_name = firstName;
+      const last_name = lastName;
+      const { data: student, error } = await supabase
+        .from("student")
+        .insert([{ student_id, first_name, last_name }])
+        .select();
+      if (student) console.log(student);
+      if (error) {
+        console.log(error);
+      }
+    }
+
+    if (error) {
+      console.log(error);
     }
   };
 
@@ -24,11 +38,12 @@ export const AuthContextProvider = ({ children }) => {
       password: password,
     });
 
+    if (data) {
+      setUser(data.user);
+    }
+
     if (error) {
       console.log(error);
-    }
-    if (data) {
-      console.log(data);
     }
   };
 
@@ -48,7 +63,7 @@ export const AuthContextProvider = ({ children }) => {
       setIsLoading(false);
     });
     return () => {
-      unsubscribe();
+      unsubscribe;
     };
   }, []);
 

@@ -1,13 +1,15 @@
 import "../assets/css/input_field.css";
 
-export default function InputField({ label, type, setValue }) {
+export default function InputField({ id, label, type, setValue }) {
   return (
     <div className="input-group">
-      <label htmlFor={type} className="label">{label}</label>
+      <label htmlFor={id} className="label">
+        {label}
+      </label>
       <input
         autoComplete="off"
         name={type}
-        id={type}
+        id={id}
         className="input"
         type={type}
         onChange={(e) => setValue(e.target.value)}

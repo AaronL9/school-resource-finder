@@ -8,23 +8,25 @@ import GoogleButton from "react-google-button";
 import InputField from "../components/InputField";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Loader from "../components/Loader";
+import supabase from "../config/supabaseClient";
 
 export default function Registration() {
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { createUser } = useAuthContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      createUser(email, password);
+      await createUser(firstName, lastName, email, password);
       setIsLoading(false);
-      navigate('/student/home')
+      navigate("/student/home");
     } catch (error) {
       console.log(error.message);
     }
@@ -39,17 +41,28 @@ export default function Registration() {
           <p>connect with your friend today!</p>
         </div>
         <form onSubmit={handleSubmit}>
+          <div className="full-name">
+            <InputField
+              id={"fist-name"}
+              type={"text"}
+              label={"First Name"}
+              setValue={setFirstName}
+            />
+            <InputField
+              id={"last-name"}
+              type={"text"}
+              label={"Last Name"}
+              setValue={setLastName}
+            />
+          </div>
           <InputField
-            type={"text"}
-            label={"Full Name"}
-            setValue={setFullName}
-          />
-          <InputField
+            id={"email"}
             type={"email"}
             label={"Email Address"}
             setValue={setEmail}
           />
           <InputField
+            id={"password"}
             type={"password"}
             label={"Password"}
             setValue={setPassword}
@@ -58,10 +71,7 @@ export default function Registration() {
         </form>
         <div className="line"></div>
         <div className="media-options">
-          <GoogleButton
-            onClick={() => signInWithGoogle()}
-            type="dark"
-          />
+          <GoogleButton onClick={() => signInWithGoogle()} type="dark" />
         </div>
         <div className="go-to-login">
           <p>

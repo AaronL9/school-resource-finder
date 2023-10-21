@@ -1,6 +1,6 @@
 .registration {
   width: min(500px, 90vw);
-  height: 625px;
+  height: auto;
   background-color: white;
   border-radius: 25px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -19,6 +19,8 @@
   margin-top: 2rem;
 }
 
+
+
 .registration form div {
   width: max-content;
   margin: auto;
@@ -35,6 +37,22 @@
   padding: 0.5rem;
   border-radius: 5px;
   border-width: 1px;
+}
+
+.registration .full-name {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.registration .full-name div {
+  width: auto;
+  margin: 0;
+}
+
+
+.registration .full-name .input {
+  /* width: 50%; */
 }
 
 .registration form input[type="submit"] {

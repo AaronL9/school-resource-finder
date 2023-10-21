@@ -14,11 +14,11 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuthContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      signIn(email, password);
+      await signIn(email, password);
       setIsLoading(false);
       navigate("/student/home");
     } catch (error) {
