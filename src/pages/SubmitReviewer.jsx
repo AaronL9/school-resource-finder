@@ -91,7 +91,7 @@ export default function SubmitReviewer() {
   };
 
   return (
-    <>
+    <div className="submit-reviewer">
       {isLoading && (
         <div className="global-loader">
           <SubmitLoader />
@@ -171,6 +171,6 @@ export default function SubmitReviewer() {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

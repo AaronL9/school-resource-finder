@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import supabase from "../config/supabaseClient";
+import { createPopupWin } from "../assets/js/popup";
 
 export const AuthContext = createContext();
 
@@ -8,43 +9,26 @@ export const AuthContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const createUser = async (firstName, lastName, email, password) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        data: {
+          full_name: `${firstName} ${lastName}`,
+        },
+      },
     });
 
-    if (data) {
-      const student_id = data.user.id;
-      const first_name = firstName;
-      const last_name = lastName;
-      const { data: student, error } = await supabase
-        .from("student")
-        .insert([{ student_id, first_name, last_name }])
-        .select();
-      if (student) console.log(student);
-      if (error) {
-        console.log(error);
-      }
-    }
-
-    if (error) {
-      console.log(error);
-    }
+    if (error) console.log(error);
   };
 
   const signIn = async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
 
-    if (data) {
-      setUser(data.user);
-    }
-
-    if (error) {
-      console.log(error);
-    }
+    if (error) console.log(error);
   };
 
   const logout = async () => {
@@ -55,11 +39,29 @@ export const AuthContextProvider = ({ children }) => {
     setUser(null);
   };
 
-  const signInWithGoogle = () => {};
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        skipBrowserRedirect: true,
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+
+    createPopupWin(data.url, "google", 600, 600);
+    console.log(data, error);
+  };
 
   useEffect(() => {
+    console.log(user);
     const unsubscribe = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user);
+      window.close();
+      if (session?.user) {
+        setUser(session.user);
+      }
       setIsLoading(false);
     });
     return () => {
@@ -69,7 +71,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoading, createUser, signIn, logout, user }}
+      value={{ isLoading, createUser, signIn, logout, user, signInWithGoogle }}
     >
       {!isLoading && children}
     </AuthContext.Provider>

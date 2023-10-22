@@ -1,0 +1,55 @@
+.reviewer-view {
+  /* border: 1px solid red; */
+  text-align: center;
+  margin: auto;
+  padding-block: 1rem;
+  width: min(1000px, 90%);
+  border-radius: 10px;
+  position: relative;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  
+}
+
+.reviewer-view > * {
+  /* border: 1px solid blue; */
+}
+
+.reviewer-view__title {
+  font-size: 4rem;
+  font-weight: 500;
+}
+
+.reviewer-view__subject {
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.reviewer-view__author {
+  width: min(800px, 90%);
+  text-align: left;
+  margin: auto;
+  font-weight: 200;
+}
+
+.reviewer-view__description {
+  width: min(800px, 90%);
+  margin: auto;
+  text-align: justify;
+  margin-bottom: 2rem;
+}
+
+.reviewer-view__image {
+  width: 500px;
+  /* height: 300px; */
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
+#heart {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}

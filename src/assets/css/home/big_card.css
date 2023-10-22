@@ -4,11 +4,13 @@
   max-width: 1250px;
   margin: 50px auto;
   padding: 20px;
-  gap: 20px;
-  background-color: #f5f5f5;
+  gap: 2rem;
+  /* background-color: #f5f5f5; */
   border-radius: 25px;
 }
 .reviewers__card-list .card-item {
+  display: flex;
+  flex-direction: column;
   background: #fff;
   padding: 26px;
   border-radius: 8px;
@@ -23,13 +25,35 @@
   border: 2px solid #000;
 }
 
+.reviewers__card-list .card-details {
+  margin-top: auto;
+}
+
+.reviewers__card-list .card-details__author {
+  font-weight: 200;
+  color: black;
+}
+
+.reviewers__card-list .card-details__author strong {
+  font-weight: 400;
+}
+
 .image-loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.reviewers__card-list .card-item img, .image-loader-container {
+.image-loader-container .loading {
+  display: none;
+}
+
+.image-loader-container .loaded {
+  display: block;
+}
+
+.reviewers__card-list .card-item img,
+.image-loader-container {
   width: 100%;
   aspect-ratio: 16/9;
   border-radius: 8px;
@@ -43,7 +67,7 @@
   margin-top: 1rem;
 }
 
-.reviewers__card-list span {
+.reviewers__card-list .tags span {
   display: inline-block;
   background: #f7dff5;
   padding: 8px 15px;
@@ -51,15 +75,15 @@
   border-radius: 50px;
   font-weight: 600;
 }
-.reviewers__card-list .pink {
+.reviewers__card-list .tags .pink {
   background-color: #f7dff5;
   color: #b22485;
 }
-.reviewers__card-list .blue {
+.reviewers__card-list .tags .blue {
   background-color: #d1e8ff;
   color: #2968a8;
 }
-.reviewers__card-list .green {
+.reviewers__card-list .tags .green {
   background-color: #d6f8d6;
   color: #205c20;
 }

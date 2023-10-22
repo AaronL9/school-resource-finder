@@ -26,11 +26,11 @@ export default function Home() {
 
   return (
     <div className="home">
-      <section className="reviewer-slider">
+      {/* <section className="reviewer-slider">
         <h2>Latest Uploads</h2>
         <ReviewerSlider />
       </section>
-      <div className="separator"></div>
+      <div className="separator"></div> */}
       <section className="reviewers">
         <div className="reviewers__nav">
           <ul className="reviewers__links">

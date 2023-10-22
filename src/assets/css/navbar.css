@@ -11,9 +11,16 @@ nav {
   width: 100%;
   display: flex;
   align-items: center;
-  background: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.26);
+  /* background-color: #fff; */
+  background: rgba(255, 255, 255, 0.509);
+  backdrop-filter: blur(10px);
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   z-index: 1;
+}
+
+nav.open {
+  background-color: #fff;
+  backdrop-filter: none;
 }
 
 nav .logo {
@@ -40,9 +47,10 @@ nav .sidebar {
   width: 260px;
   padding: 20px 0;
   background-color: #fff;
-  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 1px r gba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
 }
+
 nav.open .sidebar {
   left: 0;
 }

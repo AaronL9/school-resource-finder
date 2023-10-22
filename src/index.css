@@ -42,7 +42,8 @@ main {
   z-index: 0;
 }
 
-.loader, .global-loader {
+.loader,
+.global-loader {
   position: fixed;
   inset: 0;
   margin: auto;

@@ -18,7 +18,7 @@ export default function Registration() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { createUser } = useAuthContext();
+  const { createUser, signInWithGoogle } = useAuthContext();
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
