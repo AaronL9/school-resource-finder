@@ -43,7 +43,6 @@ export const AuthContextProvider = ({ children }) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        skipBrowserRedirect: true,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
@@ -51,14 +50,12 @@ export const AuthContextProvider = ({ children }) => {
       },
     });
 
-    createPopupWin(data.url, "google", 600, 600);
     console.log(data, error);
   };
 
   useEffect(() => {
     console.log(user);
     const unsubscribe = supabase.auth.onAuthStateChange((event, session) => {
-      window.close();
       if (session?.user) {
         setUser(session.user);
       }
