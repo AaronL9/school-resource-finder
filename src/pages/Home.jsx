@@ -20,7 +20,8 @@ export default function Home() {
       let { data, error } = await supabase
         .from("reviewers")
         .select("*")
-        .ilike("title", `%${searchQuery}%`);
+        .ilike("title", `%${searchQuery}%`)
+        .order("created_at", { ascending: false });
       console.log(searchQuery);
       if (data) setReviewers(data);
       if (error) console.log(error.message);
