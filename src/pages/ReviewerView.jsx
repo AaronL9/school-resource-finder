@@ -5,7 +5,10 @@ import { useParams } from "react-router-dom";
 // assets
 import "../assets/css/reviewer_view.css";
 import { useAuthContext } from "../hooks/useAuthContext";
+
+// components
 import SubmitLoader from "../components/SubmitLoader";
+import DownloadBtn from "../components/DownloadBtn";
 
 export default function ReviewerView() {
   const { id } = useParams();
@@ -41,7 +44,6 @@ export default function ReviewerView() {
         .match({ student_id: user.id, reviewer_id: id });
 
       if (favorites.length) setIsFavorite(true);
-
       const { data: reviewers, error: reviewer_error } = await supabase
         .from("reviewers")
         .select("*")
@@ -56,7 +58,7 @@ export default function ReviewerView() {
       const { data: student, error: student_error } = await supabase
         .from("student")
         .select("full_name")
-        .eq("student_id", user.id);
+        .eq("student_id", reviewers[0].student_id);
 
       if (reviewer_image_error || reviewer_error || student_error)
         console.log(reviewer_error, reviewer_image_error, student_error);
@@ -86,14 +88,16 @@ export default function ReviewerView() {
           ></i>
           <h1 className="reviewer-view__title">{reviewer.title}</h1>
           <h2 className="reviewer-view__subject">{reviewer.subject}</h2>
-          <img
-            className="reviewer-view__image"
-            src={image}
-            alt="reviewer image"
-          />
-          <p className="reviewer-view__author">
-            By <strong>{author}</strong>
-          </p>
+          <figure className="revewer-view__figure">
+            <img
+              className="reviewer-view__image"
+              src={image}
+              alt="reviewer image"
+            />
+            <figcaption className="reviewer-view_author">
+              By <span>{author}</span>
+            </figcaption>
+          </figure>
           <p className="reviewer-view__description">{reviewer.description}</p>
           <object
             data={pdf}
@@ -102,9 +106,10 @@ export default function ReviewerView() {
             height="800px"
             style={{ borderRadius: "10px" }}
           >
-            <p>
-              Unable to display PDF file. <a href={pdf}>Download</a> instead.
-            </p>
+            <div className="reviewer-view__error">
+              <DownloadBtn url={pdf} /> 
+              <p>Unable to display PDF file. Download instead.</p>
+            </div>
           </object>
         </div>
       )}

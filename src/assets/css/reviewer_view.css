@@ -7,13 +7,17 @@
   border-radius: 10px;
   position: relative;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-  
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.reviewer-view > * {
-  /* border: 1px solid blue; */
+#heart {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
 }
 
+/* ====== REVIEWER DETAILS ===== */
 .reviewer-view__title {
   font-size: 4rem;
   font-weight: 500;
@@ -37,19 +41,41 @@
   text-align: justify;
   margin-bottom: 2rem;
 }
+/* ============================ */
+
+/* ====== Reviewer Image and Author ====== */
+.revewer-view__figure {
+  width: 500px;
+  margin: auto;
+
+}
+
+.reviewer-view_author {
+  display: block;
+  text-align: left;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.reviewer-view_author span {
+  font-weight: 400;
+}
 
 .reviewer-view__image {
   width: 500px;
-  /* height: 300px; */
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin-bottom: 1rem;
   object-fit: contain;
 }
+/* ================================== */
 
-#heart {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  cursor: pointer;
+.reviewer-view__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
+.reviewer-view__error p {
+  opacity: 0.5;
+}
+
