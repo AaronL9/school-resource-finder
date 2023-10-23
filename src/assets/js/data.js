@@ -49,9 +49,9 @@ export const faqsData = [
   {
     id: 3,
     question:
-      "How can I contact the administrators of the School Reviewer Finder platform?",
+      "How can I contribute as a reviewer or share my experience with an IT school or program?",
     answer:
-      'If you have questions or need assistance, visit the "Contact Us" section. You can find our contact details or use the provided contact form to reach out to us. We\'re here to help!',
+      'We welcome contributions from students and IT professionals. If you are interested in becoming a reviewer or sharing your experiences with an IT school or program, please visit our website for more information on submission guidelines.!',
   },
   {
     id: 4,
@@ -68,8 +68,8 @@ export const faqsData = [
   {
     id: 6,
     question:
-      "What should I do if I encounter technical issues while using the platform?",
+      "Do you offer resources or guidance on pursuing a career in IT?",
     answer:
-      ' If you experience technical difficulties, please use the "Contact Us" section to report the issue. Our technical support team will assist you in resolving it.',
+      ' Yes, in addition to our reviewer, we provide resources and guides on IT career and industry trends to assist users in planning their IT education and careers.',
   },
 ];
