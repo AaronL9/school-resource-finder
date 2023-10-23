@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TagsInput } from "react-tag-input-component";
 import supabase from "../config/supabaseClient";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -26,6 +26,7 @@ registerPlugin(
 );
 
 export default function SubmitReviewer() {
+  const navigate = useNavigate();
   const { user } = useAuthContext();
   const { id } = useParams();
   const [tags, setTags] = useState([]);
@@ -47,28 +48,61 @@ export default function SubmitReviewer() {
   };
 
   const handleUpdate = async (e) => {
-    console.log(e.target);
-    const { data, error } = await supabase
+    setIsLoading(true);
+
+    // update reviewers
+    const { error: reviewers_error } = await supabase
       .from("reviewers")
       .upsert([reviewerValue]);
+    if (reviewers_error) return console.log(reviewers_error.message);
 
+    // delete tags before update
+    const { error: delete_error } = await supabase
+      .from("tags")
+      .delete()
+      .eq("reviewer_id", id);
+    if (delete_error) return console.log(delete_error.message);
+
+    // update tags
     const updatedTags = tags.map((tag) => {
       return { reviewer_id: id, tag: tag };
     });
-
-    console.log(updatedTags);
     const { error: tags_error } = await supabase
       .from("tags")
       .upsert(updatedTags);
-    if (tags_error) console.log(tags_error.message);
+    if (tags_error) return console.log(tags_error.message);
+
+    // update files
+    reviewerFiles.forEach(async (data) => {
+      let fileType = data.file.type;
+      let folder;
+
+      fileType.includes("image") ? (folder = "image") : (folder = "pdf");
+      const { error } = await supabase.storage
+        .from("reviewers")
+        .update(`${folder}/${id}`, data.file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+      if (error) return console.log(error.message);
+    });
+
+    navigate('/student/profile')
   };
 
-  const handleDelete = (e) => {
-    console.log(e.target);
+  const handleDelete = async (e) => {
+    setIsLoading(true);
+    const { error } = await supabase
+      .from("reviewers")
+      .delete()
+      .eq("reviewer_id", id);
+
+    if (!error) navigate("/student/profile");
   };
 
   useEffect(() => {
     const fetchReviewer = async () => {
+      setIsLoading(true);
       let { data: reviewers, error: reviewers_error } = await supabase
         .from("reviewers")
         .select("reviewer_id ,title, subject, description")
@@ -93,6 +127,7 @@ export default function SubmitReviewer() {
         }));
       }
       if (reviewers_error) console.log(reviewers_error.message);
+      setIsLoading(false);
     };
     fetchReviewer();
   }, []);

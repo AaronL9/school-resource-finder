@@ -5,11 +5,11 @@ function FilterNav() {
   const [activeItem, setActiveItem] = useState(0);
 
   const items = [
-    { label: "Home", color: "orange" },
-    { label: "About", color: "green" },
-    { label: "Testimonials", color: "blue" },
-    { label: "Blog", color: "red" },
-    { label: "Contact", color: "rebeccapurple" },
+    { label: "All", color: "orange" },
+    { label: "Popular", color: "green" },
+    { label: "Web", color: "blue" },
+    { label: "System", color: "red" },
+    { label: "Animation", color: "rebeccapurple" },
   ];
 
   const handleItemClick = (index) => {

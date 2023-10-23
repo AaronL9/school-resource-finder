@@ -36,7 +36,7 @@ export default function ProfileCard({ details }) {
       <div className="profile__bottom-text">
         <div className="profile__text">{limitString(details.description, 100)}</div>
         <div className="profile__btn">
-          <Link href="#">Edit</Link>
+          <Link to={`reviewer/${details.reviewer_id}`}>Edit</Link>
         </div>
       </div>
     </div>
