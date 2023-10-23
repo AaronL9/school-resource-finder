@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import supabase from "../config/supabaseClient";
-import { createPopupWin } from "../assets/js/popup";
 
 export const AuthContext = createContext();
 
