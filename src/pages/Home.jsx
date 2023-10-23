@@ -6,15 +6,15 @@ import "../assets/css/home/home.css";
 import "../assets/css/home/reviewer_nav.css";
 
 // components
-import ReviewerSlider from "../components/ReviewerSlider";
-import ReviewersItem from "../components/home/ReviewersItem";
 import BigCard from "../components/home/BigCard";
-import FilterNav from "../components/FilterNav";
 import SearchBar from "../components/SearchBar";
 
 export default function Home() {
   const [reviewers, setReviewers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(8);
+  const totalPages = 20;
+
   useEffect(() => {
     const fetchReviewers = async () => {
       let { data, error } = await supabase
@@ -24,8 +24,6 @@ export default function Home() {
       console.log(searchQuery);
       if (data) setReviewers(data);
       if (error) console.log(error.message);
-
-      
     };
     fetchReviewers();
   }, [searchQuery]);

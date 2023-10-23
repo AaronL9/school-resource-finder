@@ -1,5 +1,7 @@
 import React from 'react'
 import '../assets/css/search_bar.css'
+
+
 export default function SearchBar({ setSearchQuery }) {
   return (
     <>

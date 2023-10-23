@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../assets/css/profile_reviewers.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 import supabase from "../config/supabaseClient";
-import ProfileCard from "./ProfileCard";
+import MyReviewerCard from "./MyReviewerCard";
+
 function ProfileReviewers() {
   const { user } = useAuthContext();
   const [userReviewers, setUserReviewers] = useState([]);
@@ -21,7 +22,7 @@ function ProfileReviewers() {
   return (
     <div className="profile__reviewers">
       {userReviewers.map((reviewer, index) => (
-        <ProfileCard key={index} details={reviewer} />
+        <MyReviewerCard key={index} details={reviewer} />
       ))}
     </div>
   );
