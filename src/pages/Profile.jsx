@@ -9,6 +9,7 @@ import supabase from "../config/supabaseClient";
 export default function Profile() {
   const { user } = useAuthContext();
   const [fullName, setFullName] = useState();
+  const [URL, setURL] = useState(null);
 
   useEffect(() => {
     const fetchStudent = async () => {
@@ -18,6 +19,17 @@ export default function Profile() {
         .eq("student_id", user.id);
 
       if (student) setFullName(student[0].full_name);
+
+      const { data } = supabase.storage
+        .from("reviewers")
+        .getPublicUrl(`profile_pictures/${user.id}`);
+
+      try {
+        const response = await fetch(data.publicUrl);
+        if (response.ok) setURL(`${data.publicUrl}?${new Date().getTime()}`);
+      } catch (error) {
+        setProfilePic(null);
+      }
     };
     fetchStudent();
   });
@@ -25,7 +37,10 @@ export default function Profile() {
     <div className="profile">
       <h1 className="profile__title">Profile</h1>
       <div className="profile__header">
-        <img className="profile__picture" src="/images/profile.jpg" />
+        <img
+          className="profile__picture"
+          src={URL ? URL : "/images/profile.jpg"}
+        />
         <h2 className="profile__full-name">{fullName}</h2>
         <span className="profile__track">Webdev-5</span>
       </div>
