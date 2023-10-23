@@ -40,7 +40,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signInWithGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         queryParams: {
@@ -49,8 +49,7 @@ export const AuthContextProvider = ({ children }) => {
         },
       },
     });
-
-    console.log(data, error);
+    if (error) console.log(error.message)
   };
 
   useEffect(() => {
