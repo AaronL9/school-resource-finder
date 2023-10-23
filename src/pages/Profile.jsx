@@ -5,13 +5,16 @@ import "../assets/css/home/big_card.css";
 import ProfileReviewers from "../components/ProfileReviewers";
 import { useAuthContext } from "../hooks/useAuthContext";
 import supabase from "../config/supabaseClient";
+import SubmitLoader from "../components/SubmitLoader";
 
 export default function Profile() {
   const { user } = useAuthContext();
   const [fullName, setFullName] = useState();
   const [URL, setURL] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchStudent = async () => {
       let { data: student, error } = await supabase
         .from("student")
@@ -30,11 +33,17 @@ export default function Profile() {
       } catch (error) {
         setProfilePic(null);
       }
+      setIsLoading(false);
     };
     fetchStudent();
-  });
+  }, []);
   return (
     <div className="profile">
+      {isLoading && (
+        <div className="global-loader">
+          <SubmitLoader />
+        </div>
+      )}
       <h1 className="profile__title">Profile</h1>
       <div className="profile__header">
         <img
