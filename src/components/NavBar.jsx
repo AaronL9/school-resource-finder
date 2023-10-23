@@ -7,17 +7,22 @@ import "../assets/css/navbar.css";
 // components
 import SideBarLink from "./SideBarLink";
 import { useAuthContext } from "../hooks/useAuthContext";
+import supabase from "../config/supabaseClient";
 
 function Navbar() {
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { user } = useAuthContext();
   const { logout } = useAuthContext();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [profilePic, setProfilePic] = useState("");
+  const [fullName, setFullName] = useState("");
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -30,6 +35,26 @@ function Navbar() {
   };
 
   useEffect(() => {
+    const fetchImage = async () => {
+      const { data } = supabase.storage
+        .from("reviewers")
+        .getPublicUrl(`profile_pictures/${user.id}`);
+
+      let { data: student, error } = await supabase
+        .from("student")
+        .select("full_name")
+        .eq("student_id", user.id);
+
+      if (student) setFullName(student[0].full_name);
+
+      try {
+        const response = await fetch(data.publicUrl);
+        if (response.ok) setProfilePic(data.publicUrl);
+      } catch (error) {
+        setProfilePic(null);
+      }
+    };
+    fetchImage();
     setIsOpen(false);
     window.scrollTo(0, 0);
   }, [location]);
@@ -40,6 +65,13 @@ function Navbar() {
         <div className="logo">
           <i className="bx bx-menu menu-icon" onClick={toggleNavbar}></i>
           <span className="logo-name">School Resource Finder</span>
+        </div>
+        <div className="nav-profile">
+          <img
+            className="nav-profile__picture"
+            src={profilePic ? profilePic : "/images/profile.jpg"}
+          />
+          <span>{fullName}</span>
         </div>
         <div className="sidebar">
           <div className="logo">
@@ -63,7 +95,7 @@ function Navbar() {
                 label={"Favorites"}
                 path={"favorites"}
               />
-                <SideBarLink
+              <SideBarLink
                 iconClass={"bx bx-info-circle icon"}
                 label={"FAQs"}
                 path={"faqs"}
