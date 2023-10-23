@@ -63,20 +63,15 @@ function Navbar() {
                 label={"Favorites"}
                 path={"favorites"}
               />
+                <SideBarLink
+                iconClass={"bx bx-info-circle icon"}
+                label={"FAQs"}
+                path={"faqs"}
+              />
               <SideBarLink
                 iconClass={"bx bx-user-circle icon"}
                 label={"Profile"}
                 path={"profile"}
-              />
-              <SideBarLink
-                iconClass={"bx bx-message-rounded icon"}
-                label={"Message Us"}
-                path={"message"}
-              />
-              <SideBarLink
-                iconClass={"bx bx-info-circle icon"}
-                label={"FAQs"}
-                path={"faqs"}
               />
             </ul>
             <div className="bottom-content">

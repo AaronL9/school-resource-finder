@@ -13,7 +13,6 @@ import Home from "./pages/Home";
 import RootLayout from "./layout/RootLayout";
 import SubmitReviewer from "./pages/SubmitReviewer";
 import Favorites from "./pages/Favorites";
-import MessageUs from "./pages/MessageUs";
 import Faqs from "./pages/Faqs";
 import Setting from "./pages/Setting";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
@@ -34,7 +33,6 @@ const router = createBrowserRouter(
           <Route path="home" element={<Home />} />
           <Route path="submit" element={<SubmitReviewer />} />
           <Route path="favorites" element={<Favorites />} />
-          <Route path="message" element={<MessageUs />} />
           <Route path="faqs" element={<Faqs />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Setting />} />
