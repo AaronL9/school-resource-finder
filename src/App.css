@@ -130,3 +130,11 @@
   }
 }
 /* =========================================== */
+
+/* ====== SEARCH BAR ===== */
+.reviewers__searchbar {
+
+  width: 80%;
+  margin-inline: auto;
+  margin-top: 3rem;
+}

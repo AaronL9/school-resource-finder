@@ -19,13 +19,18 @@
 
 /* ====== REVIEWER DETAILS ===== */
 .reviewer-view__title {
-  font-size: 4rem;
+  font-size: 2rem;
   font-weight: 500;
+  width: 80%;
+  margin-inline: auto;
 }
 
 .reviewer-view__subject {
   font-weight: 400;
+  font-size: 1rem;
   margin-bottom: 2rem;
+  width: fit-content;
+  margin-inline: auto;
 }
 
 .reviewer-view__author {

@@ -33,6 +33,8 @@ export default function SubmitReviewer() {
     description: "",
   });
 
+  console.log(tags.length)
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setReviewerValue((prevState) => ({
@@ -67,7 +69,7 @@ export default function SubmitReviewer() {
 
         fileType.includes("image") ? (folder = "image") : (folder = "pdf");
 
-        const { error } = await supabase.storage
+        const { data:file, error } = await supabase.storage
           .from("reviewers")
           .upload(`${folder}/${reviewer_id}`, data.file);
 
@@ -131,12 +133,13 @@ export default function SubmitReviewer() {
                 required
               />
             </div>
-            <span className="formbold-form-label">Tags</span>
+            <span className="formbold-form-label">Tags (max: 4)</span>
             <TagsInput
               value={tags}
-              onChange={setTags}
+              onChange={tags.length < 4 ? setTags : null}
               name="tags"
-              placeHolder="Enter tags"
+              placeHolder={tags.length < 4 ? 'Enter tags' : null}
+              isEditOnRemove={true}
             />
             <br />
             <div className="formbold-mb-5">
