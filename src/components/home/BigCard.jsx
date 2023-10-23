@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import ImageLoader from "../ImageLoader";
 
 export default function BigCard({ details }) {
@@ -9,7 +8,6 @@ export default function BigCard({ details }) {
   const [tags, setTags] = useState([]);
   const [author, setAuthor] = useState(null);
 
-  const { user } = useAuthContext();
   const [isLoading, setIsloading] = useState(true);
   const colors = ["pink", "blue", "green"];
   let color = 0;
@@ -29,7 +27,7 @@ export default function BigCard({ details }) {
       const { data: student, error: student_error } = await supabase
         .from("student")
         .select("full_name")
-        .eq("student_id", user.id);
+        .eq("student_id", details.student_id);
 
       if (reviewer_error || tags_error || student_error)
         console.log(reviewer_error?.message, tags_error?.message, student_error?.message);

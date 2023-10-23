@@ -100,7 +100,7 @@ export default function SubmitReviewer() {
       <h1 className="submit__title">Submit Reviewer</h1>
       <div className="formbold-main-wrapper">
         <div className="formbold-form-wrapper">
-          <form onSubmit={handleSubmit}>
+          <form className="submit-reviewer__form" onSubmit={handleSubmit}>
             <div className="formbold-mb-5">
               <label htmlFor="title" className="formbold-form-label">
                 Title:
@@ -131,21 +131,6 @@ export default function SubmitReviewer() {
                 required
               />
             </div>
-            <div className="formbold-mb-5">
-              <label htmlFor="description" className="formbold-form-label">
-                Short Description:
-              </label>
-              <input
-                type="text"
-                name="description"
-                id="description"
-                placeholder="Enter description"
-                className="formbold-form-input"
-                value={reviewerValue.description}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
             <span className="formbold-form-label">Tags</span>
             <TagsInput
               value={tags}
@@ -154,6 +139,22 @@ export default function SubmitReviewer() {
               placeHolder="Enter tags"
             />
             <br />
+            <div className="formbold-mb-5">
+              <label htmlFor="description" className="formbold-form-label">
+                Description:
+              </label>
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                placeholder="Enter description"
+                className="formbold-form-input"
+                rows={10}
+                value={reviewerValue.description}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
             <FilePond
               files={reviewerFiles}
               onupdatefiles={setReviewerFiles}

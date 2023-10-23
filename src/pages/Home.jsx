@@ -17,7 +17,7 @@ export default function Home() {
     const fetchReviewers = async () => {
       let { data, error } = await supabase
         .from("reviewers")
-        .select("reviewer_id, title, subject, description");
+        .select("*");
       if (data) setReviewers(data);
       if (error) console.log(error.message);
     };

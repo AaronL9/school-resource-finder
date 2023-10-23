@@ -5,8 +5,8 @@
   margin: 50px auto;
   padding: 20px;
   gap: 2rem;
-  /* background-color: #f5f5f5; */
   border-radius: 25px;
+  background-image: linear-gradient(to top, #ebc0fd 0%, #d9ded8 100%);
 }
 .reviewers__card-list .card-item {
   display: flex;
