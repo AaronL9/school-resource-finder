@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
-import ImageLoader from "../ImageLoader";
+import ImageLoader from "../../components/ImageLoader";
+import '../../assets/css/home/big_card.css'
 
 export default function BigCard({ details }) {
   const [image, setImage] = useState([]);

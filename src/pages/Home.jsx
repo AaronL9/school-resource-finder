@@ -9,6 +9,7 @@ import "../assets/css/home/reviewer_nav.css";
 import ReviewerSlider from "../components/ReviewerSlider";
 import ReviewersItem from "../components/home/ReviewersItem";
 import BigCard from "../components/home/BigCard";
+import FilterNav from "../components/FilterNav";
 
 export default function Home() {
   const [reviewers, setReviewers] = useState([]);
@@ -23,9 +24,11 @@ export default function Home() {
     };
     fetchReviewers();
   }, []);
+  console.log(reviewers)
 
   return (
     <div className="home">
+      <h1 className="home__title">Home</h1>
       {/* <section className="reviewer-slider">
         <h2>Latest Uploads</h2>
         <ReviewerSlider />
@@ -33,7 +36,7 @@ export default function Home() {
       <div className="separator"></div> */}
       <section className="reviewers">
         <div className="reviewers__nav">
-          <ul className="reviewers__links">
+          {/* <ul className="reviewers__links">
             <ReviewersItem label={"All"} />
             <ReviewersItem label={"Popular"} />
             <ReviewersItem label={"Recommended"} />
@@ -42,7 +45,8 @@ export default function Home() {
             <ReviewersItem label={"Databases"} />
             <ReviewersItem label={"Animation"} />
             <ReviewersItem label={"System Development"} />
-          </ul>
+          </ul> */}
+          <FilterNav />
         </div>
         <div className="reviewers__card-list">
           {reviewers?.map((reviewer, index) => (

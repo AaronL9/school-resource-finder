@@ -64,6 +64,11 @@ function Navbar() {
                 path={"favorites"}
               />
               <SideBarLink
+                iconClass={"bx bx-user-circle icon"}
+                label={"Profile"}
+                path={"profile"}
+              />
+              <SideBarLink
                 iconClass={"bx bx-message-rounded icon"}
                 label={"Message Us"}
                 path={"message"}

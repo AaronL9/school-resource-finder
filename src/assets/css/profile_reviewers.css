@@ -1,0 +1,100 @@
+/* YourStylesheet.css */
+
+.profile__reviewers {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.profile__card {
+  height: 280px;
+  max-width: 350px;
+  margin: 0 20px;
+  background: white;
+  transition: 0.4s;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile__card:hover {
+  height: 420px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile__img {
+  height: 200px;
+  width: 100%;
+}
+
+.profile__img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.profile__top-text {
+  padding: 5px;
+}
+
+.profile__reviewer-title {
+  font-size: 25px;
+  font-weight: 600;
+  color: #202020;
+}
+
+.profile__subject {
+  font-size: 20px;
+  font-weight: 600;
+  color: #877dfa;
+  line-height: 20px;
+}
+
+.profile__bottom-text {
+  padding: 0 20px 10px 20px;
+  margin-top: 5px;
+  background: white;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.1s;
+}
+
+.profile__card:hover .profile__bottom-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+.profile__text {
+  text-align: justify;
+}
+
+.profile__btn {
+  margin: 10px 0;
+  text-align: left;
+}
+
+.profile__btn a {
+  text-decoration: none;
+  background: #877dfa;
+  color: #f2f2f2;
+  padding: 5px 8px;
+  border-radius: 3px;
+  display: inline-flex;
+  transition: 0.2s;
+}
+
+.profile__btn a:hover {
+  transform: scale(0.9);
+}
+
+@media screen and (max-width: 978px) {
+  .profile__reviewers {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .profile__card {
+    max-width: 700px;
+    margin: 20px 0;
+  }
+}

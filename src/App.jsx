@@ -19,6 +19,8 @@ import Setting from "./pages/Setting";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
 import Gate from "./auth/Gate";
 import ReviewerView from "./pages/ReviewerView";
+import Profile from "./pages/Profile";
+import UpdateReviewer from "./pages/UpdateReviewer";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,7 +36,9 @@ const router = createBrowserRouter(
           <Route path="favorites" element={<Favorites />} />
           <Route path="message" element={<MessageUs />} />
           <Route path="faqs" element={<Faqs />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Setting />} />
+          <Route path="profile/reviewer/:id" element={<UpdateReviewer />} />
           <Route path="reviewers/:id" element={<ReviewerView />} />
         </Route>
       </Route>

@@ -1,3 +1,11 @@
+.home__title {
+  max-width: 1200px;
+  margin-inline: auto;
+  font-weight: 400;
+  border-left: 5px solid rgba(0, 0, 0, 0.498);
+  padding-left: 1rem;
+  color: rgb(56, 56, 56);
+}
 
 .home img {
   width: 100px;
@@ -13,7 +21,7 @@
   margin: auto;
   margin-bottom: 1rem;
   font-weight: 400;
-} 
+}
 
 .home .separator {
   border-top: 2px solid rgba(0, 0, 0, 0.25);
@@ -28,7 +36,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 5rem;
-} 
+}
 
 .home .major-link a {
   display: flex;
@@ -49,13 +57,13 @@
 }
 
 .notes_reviewer {
-  background-color: #3A1F33;
+  background-color: #3a1f33;
 }
 
 .notes {
-  background-color: #2A5F61;
+  background-color: #2a5f61;
 }
 
 .request {
-  background-color: #83362F;
+  background-color: #83362f;
 }
