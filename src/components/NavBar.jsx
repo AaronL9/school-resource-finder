@@ -49,7 +49,7 @@ function Navbar() {
 
       try {
         const response = await fetch(data.publicUrl);
-        if (response.ok) setProfilePic(data.publicUrl);
+        if (response.ok) setProfilePic(`${data.publicUrl}?${new Date().getTime()}`);
       } catch (error) {
         setProfilePic(null);
       }
