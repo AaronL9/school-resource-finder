@@ -87,7 +87,7 @@ export default function SubmitReviewer() {
       if (error) return console.log(error.message);
     });
 
-    navigate('/student/profile')
+    navigate("/student/profile");
   };
 
   const handleDelete = async (e) => {
@@ -97,6 +97,11 @@ export default function SubmitReviewer() {
       .delete()
       .eq("reviewer_id", id);
 
+    const { error: bucket_error } = await supabase.storage
+      .from("reviewers")
+      .remove([`image/${id}`, `pdf/${id}`]);
+
+    if (bucket_error) console.log(bucket_error)
     if (!error) navigate("/student/profile");
   };
 

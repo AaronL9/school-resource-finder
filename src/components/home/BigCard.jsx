@@ -37,7 +37,7 @@ export default function BigCard({ details, searchQuery }) {
         );
 
       if (tags) setTags(tags);
-      if (URL) setImage(URL.publicUrl);
+      if (URL) setImage(`${URL.publicUrl}?${new Date().getTime()}`);
       if (student) setAuthor(student[0].full_name);
     };
     fetchImage();

@@ -11,7 +11,7 @@ export default function MyReviewerCard({ details }) {
       .from("reviewers")
       .getPublicUrl(`image/${details.reviewer_id}`);
 
-    if (data) setImageUrl(data.publicUrl);
+    if (data) setImageUrl(`${data.publicUrl}?${new Date().getTime()}`);
   }, []);
   return (
     <>
