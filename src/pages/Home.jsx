@@ -8,14 +8,24 @@ import "../assets/css/home/reviewer_nav.css";
 // components
 import BigCard from "../components/home/BigCard";
 import SearchBar from "../components/SearchBar";
+import SuccessMessg from "../components/SuccessMessg";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Home() {
+  const { authEvent, setAuthEvent } = useAuthContext();
   const [reviewers, setReviewers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(8);
-  const totalPages = 20;
+  const [isSuccessVisible, setSuccessVisible] = useState(false);
+
+  const handleCloseSuccess = () => {
+    setSuccessVisible(false);
+  };
 
   useEffect(() => {
+    if (authEvent === "SIGNED_IN") setSuccessVisible(true);
+    supabase.auth.onAuthStateChange((event) => {
+      setAuthEvent(event);
+    });
     const fetchReviewers = async () => {
       let { data, error } = await supabase
         .from("reviewers")
@@ -30,18 +40,30 @@ export default function Home() {
   }, [searchQuery]);
 
   return (
-    <div className="home">
-      <h1 className="home__title">Home</h1>
-      <section className="reviewers">
-        <div className="reviewers__searchbar">
-          <SearchBar setSearchQuery={setSearchQuery} />
-        </div>
-        <div className="reviewers__card-list">
-          {reviewers?.map((reviewer, index) => (
-            <BigCard key={index} details={reviewer} searchQuery={searchQuery} />
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      {isSuccessVisible && (
+        <SuccessMessg
+          message={"Login Succesfully"}
+          onClose={handleCloseSuccess}
+        />
+      )}
+      <div className="home">
+        <h1 className="home__title">Home</h1>
+        <section className="reviewers">
+          <div className="reviewers__searchbar">
+            <SearchBar setSearchQuery={setSearchQuery} />
+          </div>
+          <div className="reviewers__card-list">
+            {reviewers?.map((reviewer, index) => (
+              <BigCard
+                key={index}
+                details={reviewer}
+                searchQuery={searchQuery}
+              />
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

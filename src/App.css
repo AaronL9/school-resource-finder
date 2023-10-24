@@ -138,3 +138,36 @@
   margin-inline: auto;
   margin-top: 3rem;
 }
+
+
+/* pop up success message */
+.success-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; 
+  color: white;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  opacity: 0; 
+  animation: fadeInOut 3s ease-in-out; 
+  z-index: 5000;
+}
+
+/* Keyframes for Animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

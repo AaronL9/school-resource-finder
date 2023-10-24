@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [authEvent, setAuthEvent] = useState('')
 
   const createUser = async (firstName, lastName, email, password) => {
     const { error } = await supabase.auth.signUp({
@@ -27,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
       password: password,
     });
 
-    if (error) console.log(error);
+    if (error) throw Error(error.message)
   };
 
   const logout = async () => {
@@ -57,6 +58,7 @@ export const AuthContextProvider = ({ children }) => {
       if (session?.user) {
         setUser(session.user);
       }
+      setAuthEvent(event)
       setIsLoading(false);
     });
     return () => {
@@ -66,7 +68,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoading, createUser, signIn, logout, user, signInWithGoogle }}
+      value={{ isLoading, createUser, signIn, logout, user, signInWithGoogle, authEvent, setAuthEvent }}
     >
       {!isLoading && children}
     </AuthContext.Provider>
