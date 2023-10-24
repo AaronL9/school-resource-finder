@@ -49,9 +49,9 @@ export const faqsData = [
   {
     id: 3,
     question:
-      "How can I contribute as a reviewer or share my experience with an IT school or program?",
+      "How can I contribute my experience to your website?",
     answer:
-      'We welcome contributions from students and IT professionals. If you are interested in becoming a reviewer or sharing your experiences with an IT school or program, please visit our website for more information on submission guidelines.!',
+      'We welcome contributions from students and IT professionals. If you are interested in becoming a reviewer or sharing your experiences with an IT school or program, please visit our website!',
   },
   {
     id: 4,
